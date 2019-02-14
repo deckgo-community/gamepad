@@ -20,26 +20,38 @@ export class DeckdeckgoGamepad {
   }
 
   componentDidUnload() {
-    this.gamepad.destroy();
+    this.gamepad.unsubscribe();
   }
 
   @Listen('window:gamepadbuttondown')
-  protected gamepadButtonDownHandler(event: GamepadButtonEvent) {
+  protected async gamepadButtonDownHandler(event: GamepadButtonEvent) {
     // console.log(event.detail.code);
     switch (event.detail.code) {
       case 'Y': return this.slideNext();
       case 'A': return this.slidePrev();
-      case 'X': return this.playVideo();
+      case 'X':
+      case 'LStick':
+      case 'RStick':
+        return this.playVideo();
       case 'Screenshot':
       case 'Home':
         return this.toggleFullScreen();
     }
   }
 
+  @Listen('window:gamepadaxischange')
+  protected async gamepadAxisChangeHandler(event: any) {
+    const x = event.detail.x;
+    if (x !== 0) {
+      if (x === 1) return this.slideNext();
+      if (x === -1) return this.slidePrev();
+    }
+  }
+
   slideNext() {
     const elem = document.getElementsByTagName('deckgo-deck') as any;
     if (elem && elem.length > 0) {
-      elem[0].slideNext(false);
+      elem[0].slideNext();
     }
   }
 
@@ -59,7 +71,7 @@ export class DeckdeckgoGamepad {
 
   playVideo() {
     return new Promise(async (resolve) => {
-      const deck = document.getElementsByTagName('deckgo-deck') as any;
+      const [deck] = document.getElementsByTagName('deckgo-deck') as any;
       if (!deck) {
         resolve();
         return;
