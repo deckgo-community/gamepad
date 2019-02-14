@@ -60,8 +60,8 @@ The [Stencil documentation](https://stenciljs.com/docs/overview) provide example
 To develop and run this Web Component locally, proceed as following:
 
 ```
-git clone https://github.com/deckgo/deckdeckgo-gamepade
-cd deckdeckgo-gamepade
+git clone https://github.com/deckgo/deckdeckgo-gamepad
+cd deckdeckgo-gamepad
 npm install
 npm run start
 ```
