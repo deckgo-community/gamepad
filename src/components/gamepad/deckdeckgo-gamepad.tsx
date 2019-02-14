@@ -43,7 +43,7 @@ export class DeckdeckgoGamepad {
     }
   }
 
-  private loop: number;
+  private loop: any;
   @Listen('window:gamepadaxischange')
   protected async gamepadAxisChangeHandler(event: any) {
     clearInterval(this.loop);
