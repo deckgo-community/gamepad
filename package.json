@@ -25,7 +25,12 @@
     "@gamepad/plugin-joycon": "^0.1.1",
     "@stencil/core": "^0.17.1",
     "@stencil/sass": "^0.1.1",
-    "np": "^4.0.2"
+    "@types/jest": "23.3.14",
+    "@types/puppeteer": "1.12.1",
+    "jest": "23.6.0",
+    "jest-cli": "23.6.0",
+    "np": "^4.0.2",
+    "puppeteer": "1.11.0"
   },
   "repository": {
     "type": "git",
