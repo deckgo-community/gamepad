@@ -19,8 +19,8 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "devDependencies": {
-    "@gamepad/core": "^0.1.0",
-    "@gamepad/plugin-joycon": "^0.1.0",
+    "@gamepad/core": "^0.1.1",
+    "@gamepad/plugin-joycon": "^0.1.1",
     "@stencil/core": "^0.17.1",
     "@stencil/sass": "^0.1.1"
   },
@@ -33,7 +33,7 @@
     {
       "name": "Nate Moore"
     },
-    { 
+    {
       "name": "David Dal Busco"
     }
   ],
