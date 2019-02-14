@@ -1,6 +1,6 @@
 {
   "name": "deckdeckgo-gamepad",
-  "version": "1.0.0-alpha.0",
+  "version": "0.9.0",
   "description": "A Web Component to control DeckDeckGo slides with a Gamepad",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
@@ -16,13 +16,16 @@
     "build": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll"
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "version": "npm run build",
+    "release": "np"
   },
   "devDependencies": {
     "@gamepad/core": "^0.1.1",
     "@gamepad/plugin-joycon": "^0.1.1",
     "@stencil/core": "^0.17.1",
-    "@stencil/sass": "^0.1.1"
+    "@stencil/sass": "^0.1.1",
+    "np": "^4.0.2"
   },
   "repository": {
     "type": "git",
