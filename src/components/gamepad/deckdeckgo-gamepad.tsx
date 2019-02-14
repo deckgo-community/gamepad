@@ -9,9 +9,12 @@ import joycon from '@gamepad/plugin-joycon';
 })
 export class DeckdeckgoGamepad {
 
+  private deck: HTMLElement;
   private gamepad: GamepadEventEmitter;
   
   componentWillLoad() {
+    this.deck = document.querySelector('deckgo-deck') as HTMLElement;
+
     this.gamepad = new GamepadEventEmitter({
       plugins: [
         joycon()
@@ -20,6 +23,7 @@ export class DeckdeckgoGamepad {
   }
 
   componentDidUnload() {
+    this.deck = undefined;
     this.gamepad.unsubscribe();
   }
 
@@ -39,44 +43,47 @@ export class DeckdeckgoGamepad {
     }
   }
 
+  private loop: number;
   @Listen('window:gamepadaxischange')
   protected async gamepadAxisChangeHandler(event: any) {
+    clearInterval(this.loop);
+    const interval = 200;
     const x = event.detail.x;
     if (x !== 0) {
-      if (x === 1) return this.slideNext();
-      if (x === -1) return this.slidePrev();
-    }
+      if (x === 1) {
+        this.slideNext(true);
+        this.loop = setInterval(() => this.slideNext(true), interval);
+      }
+      if (x === -1) {
+        this.slidePrev(true);
+        this.loop = setInterval(() => this.slidePrev(true), interval);
+      }
+    } 
   }
 
-  slideNext() {
-    const elem = document.getElementsByTagName('deckgo-deck') as any;
-    if (elem && elem.length > 0) {
-      elem[0].slideNext();
-    }
+  slideNext(skip: boolean = false) {
+    if (!this.deck) return;
+    this.deck.slideNext(!skip);
   }
 
-  slidePrev() {
-    const elem = document.getElementsByTagName('deckgo-deck') as any;
-    if (elem && elem.length > 0) {
-      elem[0].slidePrev(false);
-    }
+  slidePrev(skip: boolean = false) {
+    if (!this.deck) return;
+    this.deck.slidePrev(!skip);
   }
   
   toggleFullScreen() {
-    const elem = document.getElementsByTagName('deckgo-deck') as any;
-    if (elem && elem.length > 0) {
-      elem[0].toggleFullScreen();
-    }
+    if (!this.deck) return;
+    this.deck.toggleFullScreen();
   }
 
   playVideo() {
     return new Promise(async (resolve) => {
-      const [deck] = document.getElementsByTagName('deckgo-deck') as any;
-      if (!deck) {
+      if (!this.deck) {
         resolve();
         return;
       }
-      const index = await deck.getActiveIndex();
+
+      const index = await this.deck.getActiveIndex();
       const youtubeSlideElement = document.querySelector('.deckgo-slide-container:nth-child(' + (index + 1) + ')') as any;
       if (!youtubeSlideElement || youtubeSlideElement.tagName !== 'deckgo-slide-youtube'.toUpperCase()) {
         resolve();
