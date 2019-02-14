@@ -9,11 +9,11 @@ import joycon from '@gamepad/plugin-joycon';
 })
 export class DeckdeckgoGamepad {
 
-  private deck: HTMLElement;
+  private deck: any;
   private gamepad: GamepadEventEmitter;
   
   componentWillLoad() {
-    this.deck = document.querySelector('deckgo-deck') as HTMLElement;
+    this.deck = document.querySelector('deckgo-deck') as any;
 
     this.gamepad = new GamepadEventEmitter({
       plugins: [
